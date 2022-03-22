@@ -1,0 +1,17 @@
+Block Editor Prototype v0.1
+
+* Blocks at bottom
+
+* Simple functions
+	- count
+	- while
+	- if
+	- variable
+	- assign
+	- comment
+	- do together [default]
+	- for each in _ (do together) [default]
+
+* Complicated functions
+	- do in order
+	- for each in _ (do in order)

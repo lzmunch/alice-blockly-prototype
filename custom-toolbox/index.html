@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Toolbox Customization Codelab</title>
+
+  <link rel="stylesheet" href="toolbox_style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      background-color: #fff;
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-weight: normal;
+      font-size: 140%;
+      margin: 10px;
+    }
+
+    #blocklyDiv {
+      float: bottom;
+      height: 90%;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Toolbox Customization Codelab</h1>
+  <button id="runBtn">Run</button>
+
+  <div id="blocklyDiv"></div>
+
+  <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+  <script src="https://unpkg.com/@blockly/dev-tools@2.0.0/dist/index.js"></script>
+  <script src="custom_category_es6.js"></script>
+  <script src="toolbox_label_es6.js"></script>
+  <script src="custom_blocks.js"></script>
+  <script src="index.js"></script>
+
+</body>
+
+</html>
+
+
