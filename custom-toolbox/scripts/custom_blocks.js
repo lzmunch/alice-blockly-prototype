@@ -1,6 +1,6 @@
 Blockly.defineBlocksWithJsonArray([
   {
-    "type": "play_sound",
+    "type": "move_shark",
     "message0": "Move %1 %2 units",
     "args0": [
       {
@@ -30,7 +30,12 @@ Blockly.defineBlocksWithJsonArray([
   },
 ]);
 
-Blockly.JavaScript['play_sound'] = function(block) {
+Blockly.JavaScript['move_shark'] = function(block) {
+  // disabled
+  if (block.runCode == false) {
+    return 'console.log("block disabled");';
+  }
+
   let amt = parseFloat(block.getFieldValue('AMT'));
   let dir = block.getFieldValue('DIR').split(',');
 
@@ -41,3 +46,20 @@ Blockly.JavaScript['play_sound'] = function(block) {
   code += 'console.log(position);';
   return code;
 };
+
+
+Blockly.Blocks['root_block'] = {
+  init: function() {
+  this.appendDummyInput()
+      .appendField('do in order')
+  this.appendStatementInput('DO');
+
+    // this.nextStatement(null);
+    this.setDeletable(false);
+    this.setMovable(false);
+    this.setEditable(false);
+  }
+}
+// Blockly.JavaScript['root_block'] = function(block) {
+//   return '';
+// }
