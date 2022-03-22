@@ -50,9 +50,9 @@ Blockly.JavaScript['move_shark'] = function(block) {
 
 Blockly.Blocks['root_block'] = {
   init: function() {
-  this.appendDummyInput()
-      .appendField('do in order')
-  this.appendStatementInput('DO');
+    this.appendDummyInput()
+        .appendField('do in order')
+    this.appendStatementInput('DO');
 
     // this.nextStatement(null);
     this.setDeletable(false);
@@ -60,6 +60,7 @@ Blockly.Blocks['root_block'] = {
     this.setEditable(false);
   }
 }
-// Blockly.JavaScript['root_block'] = function(block) {
-//   return '';
-// }
+Blockly.JavaScript['root_block'] = function(block) {
+  let branch = Blockly.JavaScript.statementToCode(block, 'DO');
+  return branch + '\n';
+}
