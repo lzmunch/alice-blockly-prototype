@@ -58,3 +58,45 @@ const customToolbox = {
     },
   ]
 }
+
+const customToolbox2 = {
+  'kind': 'categoryToolbox',
+  'contents': [
+    {
+      'kind': 'category',
+      'name': 'Shark',
+      'contents': [
+        {
+          'kind': 'block',
+          'type': 'move_shark'
+        },
+      ]
+    },
+    {
+      'kind': 'category',
+      'name': 'Basic',
+      'contents': [
+        {
+          'kind': 'block',
+          'type': 'controls_repeat'
+        },
+        {
+          'kind': 'block',
+          'type': 'controls_repeat_ext'
+        },
+        {
+          'kind': 'block',
+          'type': 'controls_whileUntil'
+        },
+        {
+          'kind': 'block',
+          'type': 'controls_forEach'
+        },
+        {
+          'kind': 'block',
+          'type': 'controls_if'
+        },
+      ]
+    },
+  ]
+}

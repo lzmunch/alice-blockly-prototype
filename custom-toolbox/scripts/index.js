@@ -42,6 +42,7 @@ function loadWorkspace(tab) {
 	else { // fresh workspace
 		setupWorkspace(workspace);
 	}
+	return workspace;
 }
 
 function saveWorkspace(tab) {
@@ -52,13 +53,18 @@ function switchTab(e) {
 	// save previous workspace, update current tab, and load workspace
 	saveWorkspace(currentTab);
 	currentTab = e.target;
-	loadWorkspace(currentTab);
+	let workspace = loadWorkspace(currentTab);
 
 	// update tabs
 	document.querySelectorAll('.tab').forEach(tab => {
 	  tab.classList.remove('current-tab');
 	});
 	currentTab.classList.add('current-tab');
+
+	// TEST - change toolbox
+	// .render(customToolbox2);
+	console.log('update toolbox')
+	workspace.updateToolbox(customToolbox2);
 }
 
 // Register menus and connect buttons
