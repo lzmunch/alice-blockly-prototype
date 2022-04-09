@@ -1,6 +1,7 @@
+// Move Camera
 Blockly.defineBlocksWithJsonArray([
   {
-    "type": "move_shark",
+    "type": "move_camera",
     "message0": "Move %1 %2 units",
     "args0": [
       {
@@ -29,13 +30,7 @@ Blockly.defineBlocksWithJsonArray([
     "colour": 355,
   },
 ]);
-
-Blockly.JavaScript['move_shark'] = function(block) {
-  // disabled
-  if (block.runCode == false) {
-    return 'console.log("block disabled");';
-  }
-
+Blockly.JavaScript['move_camera'] = function(block) {
   let amt = parseFloat(block.getFieldValue('AMT'));
   let dir = block.getFieldValue('DIR').split(',');
 
@@ -48,6 +43,7 @@ Blockly.JavaScript['move_shark'] = function(block) {
 };
 
 
+// Root block
 Blockly.Blocks['root_block'] = {
   init: function() {
     this.appendDummyInput()

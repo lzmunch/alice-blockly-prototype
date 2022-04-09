@@ -5,9 +5,63 @@ let workspace = null;
 var position = { x: 0, y:0, z:0 };
 let currentTab;
 
+const userBlocksConfig = {
+	 'myFirstMethodTab': 'my_first_method'
+};
+
 (function() {
 
 // Functions
+function createUserBlock(blockType, blockMsg) {
+	// create block for new method
+	Blockly.Blocks[blockType] = {
+		init: function() {
+				let blockJson = userBlockJsonTemplate;
+				blockJson['message0'] = blockMsg;
+
+		    this.jsonInit(blockJson);
+		    this.setPreviousStatement(true);
+			},
+	};
+	Blockly.JavaScript[blockType] = function(block) {
+	  return 'console.log("No code to execute");';
+	}
+
+	addUserBlockToToolbox(blockType);
+
+	// doesn't work?
+	try {
+		console.log(toolboxConfig[currentTab.id])
+		workspace.updateToolbox(toolboxConfig[currentTab.id]);		
+	} catch (e) {
+		console.log(e)
+	}
+	console.log('update toolbox with new user block')
+}
+
+function createNewTab() {
+	let newTab = document.querySelector('#myFirstMethodTab').cloneNode(true);
+	// TODO how to modify name
+	newTab.textContent = 'New Tab';
+	newTab.classList = ['tab'];
+	newTab.id = 'newTab';
+	newTab.addEventListener('click', switchTab);
+
+	document.querySelector('#tabs').appendChild(newTab);
+
+	toolboxConfig[newTab.id] = userMethodToolbox;
+
+	createUserBlock('new_method', 'newMethod');
+	userBlocksConfig[newTab.id] = 'new_method';
+}
+
+function updateCurrentTabBlock() {
+	let blockType = userBlocksConfig[currentTab.id];
+  let code = Blockly.JavaScript.workspaceToCode(Blockly.getMainWorkspace());
+	Blockly.JavaScript[blockType] = function(block) {
+	  return code;
+	}
+}
 
 function runCode() {
 	console.log('Output -->')
@@ -61,14 +115,15 @@ function switchTab(e) {
 	});
 	currentTab.classList.add('current-tab');
 
-	// TEST - change toolbox
-	// .render(customToolbox2);
+	// change toolbox
 	console.log('update toolbox')
-	workspace.updateToolbox(customToolbox2);
+	workspace.updateToolbox(toolboxConfig[currentTab.id]);
 }
 
-// Register menus and connect buttons
+// Connect buttons
 document.querySelector('#runBtn').addEventListener('click', runCode);
+document.querySelector('#newTabBtn').addEventListener('click', createNewTab);
+document.querySelector('#saveBtn').addEventListener('click', updateCurrentTabBlock);
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', switchTab);
 });
