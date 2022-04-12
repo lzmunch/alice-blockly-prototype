@@ -5,13 +5,48 @@ let workspace = null;
 var position = { x: 0, y:0, z:0 };
 let currentTab;
 
+// TODO consolidate dicts into one that stores all the info for each tab
 const userBlocksConfig = {
 	 'myFirstMethodTab': 'my_first_method'
 };
 
+const parametersMap = {};
+
 (function() {
 
 // Functions
+
+function parametersFlyoutCallback(workspace) {
+	let allVars = Blockly.getMainWorkspace().getAllVariables();
+	let blockList = [];
+	blockList.push(
+    {
+      "kind": "button",
+      "text": "Create parameter",
+      "callbackKey": "CREATE_PARAMETER"
+    });
+	console.log(allVars);
+	blockList = blockList.concat(allVars);
+	return blockList;
+}
+
+function createParameter(button) {
+	let callback = function(varName) {
+		console.log(varName);
+		let currentTabName = currentTab.textContent;
+		if (currentTabName in parametersMap) {
+			parametersMap[currentTabName].push(varName);
+		} else {
+			parametersMap[currentTabName] = [varName];
+		}
+		console.log(parametersMap);
+	}
+	// create variable 
+	Blockly.Variables.createVariableButtonHandler(button.getTargetWorkspace(), callback);
+	// only add to toolbox for this tab
+
+}
+
 function createUserBlock(blockType, blockMsg) {
 	// create block for new method
 	Blockly.Blocks[blockType] = {
@@ -40,11 +75,15 @@ function createUserBlock(blockType, blockMsg) {
 }
 
 function createNewTab() {
+	let newTabName = window.prompt("Enter new tab name","myMethod");
+
+	// TODO clone template tab
 	let newTab = document.querySelector('#myFirstMethodTab').cloneNode(true);
+
 	// TODO how to modify name
-	newTab.textContent = 'New Tab';
+	newTab.textContent = newTabName;
 	newTab.classList = ['tab'];
-	newTab.id = 'newTab';
+	newTab.id = newTabName.replace(/\s+/g, '');;
 	newTab.addEventListener('click', switchTab);
 
 	document.querySelector('#tabs').appendChild(newTab);
@@ -120,14 +159,6 @@ function switchTab(e) {
 	workspace.updateToolbox(toolboxConfig[currentTab.id]);
 }
 
-// Connect buttons
-document.querySelector('#runBtn').addEventListener('click', runCode);
-document.querySelector('#newTabBtn').addEventListener('click', createNewTab);
-document.querySelector('#saveBtn').addEventListener('click', updateCurrentTabBlock);
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', switchTab);
-});
-
 // set current tab
 currentTab = document.querySelector('#myFirstMethodTab');
 
@@ -137,6 +168,25 @@ Blockly.inject('blocklyDiv',
         toolbox: customToolbox,
       });
 
-setupWorkspace(Blockly.getMainWorkspace());
+let workspace = Blockly.getMainWorkspace();
+setupWorkspace(workspace);
+
+// Register button callbacks
+workspace.registerButtonCallback("CREATE_PARAMETER", createParameter);
+
+document.querySelector('#runBtn').addEventListener('click', runCode);
+document.querySelector('#newTabBtn').addEventListener('click', createNewTab);
+document.querySelector('#saveBtn').addEventListener('click', updateCurrentTabBlock);
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', switchTab);
+});
+
+document.querySelector('#boop').addEventListener('click', x => {
+	console.log(workspace.getAllVariables());
+});
+
+// Associates the function with the string 'PARAMETERS'
+workspace.registerToolboxCategoryCallback(
+    'PARAMETERS', parametersFlyoutCallback);
 
 })();

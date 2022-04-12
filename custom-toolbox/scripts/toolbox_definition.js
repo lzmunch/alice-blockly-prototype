@@ -35,7 +35,22 @@ const classCategory = {
 const parametersCategory = {
   'kind': 'category',
   'name': 'Parameters',
-  'contents': []
+  'contents': [
+    {
+      "kind": "button",
+      "text": "Create parameter",
+      "callbackKey": "CREATE_PARAMETER"
+    },
+    {
+      'kind': 'block',
+      "type": "parameters_get",
+    },
+    {
+      'kind': 'block',
+      "type": "parameters_set",
+    }
+  ]
+  // 'custom': 'PARAMETERS'
 };
 
 const inputsCategory = {
@@ -52,6 +67,12 @@ const inputsCategory = {
     }
   ]
 };
+
+const functionsCategory = {
+  'kind': 'category',
+  'name': 'Functions',
+  'custom': 'PROCEDURE'
+}
 
 const variablesCateogry = {
   'kind': 'category',
@@ -105,6 +126,7 @@ const customToolbox = {
   'contents': [
     classCategory,
     inputsCategory,
+    functionsCategory,
     variablesCateogry,
     basicCateogry,
   ]

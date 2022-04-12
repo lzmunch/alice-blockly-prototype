@@ -29,6 +29,36 @@ Blockly.defineBlocksWithJsonArray([
     "nextStatement": null,
     "colour": 355,
   },
+  // Parameters (variables) getter and setter
+  // Getter
+  {
+    "type": "parameters_get",
+    "message0": "%1",
+    "args0": [
+      {    // Beginning of the field variable dropdown
+        "type": "field_variable",
+        "name": "VAR",    // Static name of the field
+        "variable": "default_var"    // Given at runtime
+      }    // End of the field variable dropdown
+    ],
+    "output": null,    // Null means the return value can be of any type
+  },
+  // Setter
+  {
+    "type": "parameters_set",
+    "message0": "%{BKY_VARIABLES_SET}",
+    "args0": [
+      {
+        "type": "field_variable",
+        "name": "VAR",
+        "variable": "default_var"
+      },
+      {
+        "type": "input_value",    // This expects an input of any type
+        "name": "VALUE"
+      }
+    ],
+  }
 ]);
 Blockly.JavaScript['move_camera'] = function(block) {
   let amt = parseFloat(block.getFieldValue('AMT'));
@@ -60,3 +90,5 @@ Blockly.JavaScript['root_block'] = function(block) {
   let branch = Blockly.JavaScript.statementToCode(block, 'DO');
   return branch + '\n';
 }
+
+
