@@ -187,6 +187,16 @@ Blockly.inject('blocklyDiv',
 let workspace = Blockly.getMainWorkspace();
 setupWorkspace(workspace);
 
+// Extensions
+Blockly.Extensions.register(
+	'set_root',
+	function() {
+		this.setMovable(false);
+		this.setDeletable(false);
+		this.setEditable(false);
+	}
+);
+
 // Register button callbacks
 workspace.registerButtonCallback("CREATE_PARAMETER", createParameter);
 

@@ -93,7 +93,10 @@ Blockly.JavaScript['do_in_order'] = function(block) {
   return branch + '\n';
 }
 
-Blockly.Blocks['root_block'] = Blockly.Blocks['procedures_defnoreturn'];
+Blockly.Blocks['root_block'] = {
+  ...Blockly.Blocks['procedures_defnoreturn'],
+  'extensions': 'set_root'
+};
 Blockly.JavaScript['root_block'] = Blockly.JavaScript['procedures_defnoreturn'];
 
 Blockly.JavaScript['parameters_set'] = Blockly.JavaScript['variables_set'];
