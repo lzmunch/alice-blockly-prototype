@@ -12,8 +12,6 @@ const userBlocksConfig = {
 
 const parametersMap = {};
 
-(function() {
-
 // Functions
 
 function parametersFlyoutCallback(workspace) {
@@ -75,15 +73,16 @@ function createUserBlock(blockType, blockMsg) {
 }
 
 function createNewTab() {
+	// TODO check for name uniqueness
 	let newTabName = window.prompt("Enter new tab name","myMethod");
 
 	// TODO clone template tab
-	let newTab = document.querySelector('#myFirstMethodTab').cloneNode(true);
+	let newTab = document.querySelector('#templateTab').cloneNode(true);
 
 	// TODO how to modify name
 	newTab.textContent = newTabName;
 	newTab.classList = ['tab'];
-	newTab.id = newTabName.replace(/\s+/g, '');;
+	newTab.id = newTabName.replace(/\s+/g, '');
 	newTab.addEventListener('click', switchTab);
 
 	document.querySelector('#tabs').appendChild(newTab);
@@ -142,7 +141,17 @@ function loadWorkspace(tab) {
 }
 
 function saveWorkspace(tab) {
-	tab.blocklySave = Blockly.serialization.workspaces.save(Blockly.getMainWorkspace()); 
+	let workspace = Blockly.getMainWorkspace()
+	// save workspace to current tab
+	tab.blocklySave = Blockly.serialization.workspaces.save(workspace); 
+
+	// update code generator for user block
+	let blockType =  userBlocksConfig[currentTab.id];
+	console.log('update user block', blockType);
+	let code = Blockly.JavaScript.workspaceToCode(workspace);
+	Blockly.JavaScript[blockType] = function(block) {
+		return code;
+	};
 }
 
 function switchTab(e) {
@@ -151,7 +160,7 @@ function switchTab(e) {
 	currentTab = e.target;
 	let workspace = loadWorkspace(currentTab);
 
-	// update tabs
+	// update tabs display
 	document.querySelectorAll('.tab').forEach(tab => {
 	  tab.classList.remove('current-tab');
 	});
@@ -162,6 +171,9 @@ function switchTab(e) {
 	workspace.updateToolbox(toolboxConfig[currentTab.id]);
 }
 
+// initialize everything
+(function() {
+
 // set current tab
 currentTab = document.querySelector('#myFirstMethodTab');
 
@@ -171,19 +183,21 @@ Blockly.inject('blocklyDiv',
         toolbox: customToolbox,
       });
 
+// setup workspace
 let workspace = Blockly.getMainWorkspace();
 setupWorkspace(workspace);
 
 // Register button callbacks
 workspace.registerButtonCallback("CREATE_PARAMETER", createParameter);
 
+// Set up DOM button callbacks
 document.querySelector('#runBtn').addEventListener('click', runCode);
 document.querySelector('#newTabBtn').addEventListener('click', createNewTab);
 document.querySelector('#saveBtn').addEventListener('click', updateCurrentTabBlock);
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', switchTab);
 });
-
+// debug
 document.querySelector('#boop').addEventListener('click', x => {
 	console.log(workspace.getAllVariables());
 });

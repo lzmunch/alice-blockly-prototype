@@ -37,3 +37,7 @@ h1 {
 .current-tab {
   background-color: lightgrey !important;
 }
+
+#templateTab {
+  display: none;
+}
