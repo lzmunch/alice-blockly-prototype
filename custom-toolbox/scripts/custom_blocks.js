@@ -74,7 +74,9 @@ Blockly.JavaScript['move_camera'] = function(block) {
 
 
 // Root block
-Blockly.Blocks['root_block'] = {
+// extend procedures_defnoreturn
+Blockly.Blocks['do_in_order'] = {
+  ...Blockly.Blocks['procedures_defnoreturn'],
   init: function() {
     this.appendDummyInput()
         .appendField('do in order')
@@ -86,9 +88,11 @@ Blockly.Blocks['root_block'] = {
     this.setEditable(false);
   }
 }
-Blockly.JavaScript['root_block'] = function(block) {
+Blockly.JavaScript['do_in_order'] = function(block) {
   let branch = Blockly.JavaScript.statementToCode(block, 'DO');
   return branch + '\n';
 }
 
+Blockly.Blocks['root_block'] = Blockly.Blocks['procedures_defnoreturn'];
+Blockly.JavaScript['root_block'] = Blockly.JavaScript['procedures_defnoreturn'];
 

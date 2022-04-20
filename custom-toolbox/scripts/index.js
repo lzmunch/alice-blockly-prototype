@@ -90,8 +90,8 @@ function createNewTab() {
 
 	toolboxConfig[newTab.id] = userMethodToolbox;
 
-	createUserBlock('new_method', 'newMethod');
-	userBlocksConfig[newTab.id] = 'new_method';
+	createUserBlock(newTabName, newTabName);
+	userBlocksConfig[newTab.id] = newTabName;
 }
 
 function updateCurrentTabBlock() {
@@ -116,9 +116,12 @@ function runCode() {
 
 function setupWorkspace(workspace) {
 	try {
-		var parentBlock = workspace.newBlock('root_block');
-		parentBlock.initSvg();
-		parentBlock.render();
+		var rootBlock = workspace.newBlock('root_block');
+		rootBlock.setMovable(false);
+		rootBlock.setDeletable(false);
+		console.log(rootBlock)
+		rootBlock.initSvg();
+		rootBlock.render();
 	} catch(e) {
 		console.log(e)
 	}
