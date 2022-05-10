@@ -42,7 +42,6 @@ function createParameter(button) {
 	// create variable 
 	Blockly.Variables.createVariableButtonHandler(button.getTargetWorkspace(), callback);
 	// only add to toolbox for this tab
-
 }
 
 function createUserBlock(blockType, blockMsg) {
@@ -95,7 +94,7 @@ function createNewTab() {
 
 function updateCurrentTabBlock() {
 	let blockType = userBlocksConfig[currentTab.id];
-  let code = Blockly.JavaScript.workspaceToCode(Blockly.getMainWorkspace());
+	let code = Blockly.JavaScript.workspaceToCode(Blockly.getMainWorkspace());
 	Blockly.JavaScript[blockType] = function(block) {
 	  return code;
 	}
@@ -115,7 +114,8 @@ function runCode() {
 
 function setupWorkspace(workspace) {
 	try {
-		var rootBlock = workspace.newBlock('root_block');
+		console.log('setup workspace called')
+		var rootBlock = workspace.newBlock('do_in_order');
 		rootBlock.setMovable(false);
 		rootBlock.setDeletable(false);
 		console.log(rootBlock)
@@ -135,7 +135,8 @@ function loadWorkspace(tab) {
 	  Blockly.serialization.workspaces.load(saved, workspace);
 	} 
 	else { // fresh workspace
-		setupWorkspace(workspace);
+		if (tab.textContent != 'Scene' && tab.textContent != 'initializeEventListeners')
+			setupWorkspace(workspace);
 	}
 	return workspace;
 }
@@ -144,6 +145,9 @@ function saveWorkspace(tab) {
 	let workspace = Blockly.getMainWorkspace()
 	// save workspace to current tab
 	tab.blocklySave = Blockly.serialization.workspaces.save(workspace); 
+
+	if (currentTab == 'Scene' || currentTab == 'initializeEventListeners')
+		return
 
 	// update code generator for user block
 	let blockType =  userBlocksConfig[currentTab.id];
@@ -183,19 +187,20 @@ Blockly.inject('blocklyDiv',
         toolbox: customToolbox,
       });
 
-// setup workspace
-let workspace = Blockly.getMainWorkspace();
-setupWorkspace(workspace);
-
 // Extensions
 Blockly.Extensions.register(
 	'set_root',
 	function() {
+		console.log('set root')
 		this.setMovable(false);
 		this.setDeletable(false);
 		this.setEditable(false);
 	}
 );
+
+// setup workspace
+let workspace = Blockly.getMainWorkspace();
+setupWorkspace(workspace);
 
 // Register button callbacks
 workspace.registerButtonCallback("CREATE_PARAMETER", createParameter);
@@ -208,12 +213,11 @@ document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', switchTab);
 });
 // debug
-document.querySelector('#boop').addEventListener('click', x => {
-	console.log(workspace.getAllVariables());
+document.querySelector('#debugBtn').addEventListener('click', x => {
+	// console.log(workspace.getAllVariables());		
 });
 
 // Associates the function with the string 'PARAMETERS'
 workspace.registerToolboxCategoryCallback(
     'PARAMETERS', parametersFlyoutCallback);
-
 })();

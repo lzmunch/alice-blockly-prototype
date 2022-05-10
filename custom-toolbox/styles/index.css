@@ -41,3 +41,8 @@ h1 {
 #templateTab {
   display: none;
 }
+
+#interactionDiv {
+  background-color: lightgrey;
+  height: 100px;
+}

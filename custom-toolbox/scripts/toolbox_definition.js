@@ -74,13 +74,13 @@ const functionsCategory = {
   'custom': 'PROCEDURE'
 }
 
-const variablesCateogry = {
+const variablesCategory = {
   'kind': 'category',
   'name': 'Variables',
   'custom': 'VARIABLE'
 };
 
-const basicCateogry = {
+const basicCategory = {
   'kind': 'category',
   'name': 'Basic',
   'contents': [
@@ -107,6 +107,14 @@ const basicCateogry = {
   ]
 };
 
+const debugCategory = {
+  'kind': 'category',
+  'name': 'Debug',
+  'contents': [
+    functionsCategory,
+  ]
+}
+
 // util functions
 function addUserBlockToToolbox(blockType) {
   sceneCategory['contents'].push({
@@ -126,9 +134,9 @@ const customToolbox = {
   'contents': [
     classCategory,
     inputsCategory,
-    functionsCategory,
-    variablesCateogry,
-    basicCateogry,
+    variablesCategory,
+    basicCategory,
+    debugCategory,
   ]
 };
 
@@ -138,14 +146,36 @@ const userMethodToolbox = {
     classCategory,
     parametersCategory,
     inputsCategory,
-    variablesCateogry,
-    basicCateogry,
+    variablesCategory,
+    basicCategory,
+  ]
+};
+
+const eventListenersToolbox = {
+  'kind': 'categoryToolbox',
+  'contents': [
+    {
+      'kind': 'category',
+      'name': 'Event Listeners',
+      'contents': [
+        {
+          'kind': 'block',
+          'type': 'on_key_pressed'
+        }
+      ]    
+    },
+    classCategory,
+    parametersCategory,
+    inputsCategory,
+    variablesCategory,
+    basicCategory,
+    debugCategory,
   ]
 };
 
 // defines toolbox for each tab
 const toolboxConfig = {
   'sceneTab': emptyToolbox,
-  'eventListenersTab': customToolbox,
+  'eventListenersTab': eventListenersToolbox,
   'myFirstMethodTab': customToolbox
 }
