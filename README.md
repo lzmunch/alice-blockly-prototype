@@ -3,6 +3,7 @@
 This is the first iteration of the a prototype of the Alice editor built on [Blockly](https://developers.google.com/blockly). 
 
 Try the prototype a https://lzmunch.github.io/alice-blockly-prototype/src/index.html
+Open the developer console to see outputs.
 
 These were the key features from Alice expressed in the prototype:
 * Custom blocks with custom types
