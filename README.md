@@ -2,6 +2,8 @@
 
 This is the first iteration of the a prototype of the Alice editor built on [Blockly](https://developers.google.com/blockly). 
 
+Try the prototype a https://lzmunch.github.io/alice-blockly-prototype/src/index.html
+
 These were the key features from Alice expressed in the prototype:
 * Custom blocks with custom types
 * Different tabs with their own workspace, scope, and set of available blocks
@@ -15,4 +17,3 @@ These were the key features from Alice expressed in the prototype:
 
 Notes:
 * It was difficult to determine when to extend existing Blockly capabilities and when to rebuild them, since it can be difficult to access specific properties of default Blockly blocks and there is less freedom to visually structure blocks and functionalities to be similar to Alice. An example of this is the existing Alice function block. This prototype uses my own basic implementation of a function(aka procedure), to support associating them with tabs.
-* 
