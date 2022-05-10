@@ -82,7 +82,8 @@ Blockly.Blocks['on_key_pressed'] = {
 
     this.setDeletable(false);
     this.setEditable(false);
-  },
+  },  
+  tooltip: "Do something when a key is pressed.",
   extensions: 'add_do_in_order'
 }
 Blockly.JavaScript['on_key_pressed'] = function(block) {
